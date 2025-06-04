@@ -86,6 +86,9 @@ void AUntitledCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUntitledCharacter::Look);
+
+		// Inventory Toggle
+		EnhancedInputComponent->BindAction(InventoryToggleAction, ETriggerEvent::Triggered, this, &AUntitledCharacter::ToggleInventory);
 	}
 	else
 	{
@@ -127,4 +130,9 @@ void AUntitledCharacter::Look(const FInputActionValue& Value)
 		AddControllerYawInput(LookAxisVector.X);
 		AddControllerPitchInput(LookAxisVector.Y);
 	}
+}
+
+void AUntitledCharacter::ToggleInventory(const FInputActionValue& InputActionValue)
+{
+	
 }

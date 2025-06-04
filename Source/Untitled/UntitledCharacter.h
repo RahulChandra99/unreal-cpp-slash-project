@@ -44,6 +44,10 @@ class AUntitledCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	/** Inventory Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
+	UInputAction* InventoryToggleAction;
+
 public:
 	AUntitledCharacter();
 	
@@ -55,9 +59,11 @@ protected:
 
 	/** Called for looking input */
 	void Look(const FInputActionValue& Value);
-			
+
+	void ToggleInventory(const FInputActionValue& InputActionValue);
 
 protected:
+	
 	// APawn interface
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
@@ -69,5 +75,15 @@ public:
 	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
 	/** Returns FollowCamera subobject **/
 	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
+protected:
+
+	APlayerController* PlayerControllerRef;
+	
+	UPROPERTY(EditAnywhere, Category = "UI")
+	TSubclassOf<UUserWidget> InventoryWidgetClass;
+	UUserWidget* InventoryWidget;
+
+	
 };
 
