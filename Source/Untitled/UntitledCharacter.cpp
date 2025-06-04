@@ -10,6 +10,8 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputActionValue.h"
+#include "Blueprint/UserWidget.h"
+#include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -58,6 +60,17 @@ void AUntitledCharacter::BeginPlay()
 {
 	// Call the base class  
 	Super::BeginPlay();
+
+	PlayerControllerRef = UGameplayStatics::GetPlayerController(GetWorld(), 0);
+	if (!IsValid(PlayerControllerRef)) return;
+
+	//Inventory UI Initialization
+	if (InventoryWidgetClass)
+	{
+		InventoryWidget = CreateWidget(GetWorld(), InventoryWidgetClass);
+		InventoryWidget->SetOwningPlayer(PlayerControllerRef);
+	}
+	
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -88,7 +101,7 @@ void AUntitledCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUntitledCharacter::Look);
 
 		// Inventory Toggle
-		EnhancedInputComponent->BindAction(InventoryToggleAction, ETriggerEvent::Triggered, this, &AUntitledCharacter::ToggleInventory);
+		EnhancedInputComponent->BindAction(InventoryToggleAction, ETriggerEvent::Started, this, &AUntitledCharacter::ToggleInventory);
 	}
 	else
 	{
@@ -132,7 +145,20 @@ void AUntitledCharacter::Look(const FInputActionValue& Value)
 	}
 }
 
-void AUntitledCharacter::ToggleInventory(const FInputActionValue& InputActionValue)
+void AUntitledCharacter::ToggleInventory()
 {
-	
+	if (InventoryWidget->IsInViewport())
+	{
+		InventoryWidget->RemoveFromParent();
+		PlayerControllerRef->SetShowMouseCursor(false);
+		PlayerControllerRef->SetInputMode(FInputModeGameOnly());
+		GetCharacterMovement()->SetMovementMode(MOVE_None);
+	}
+	else
+	{
+		InventoryWidget->AddToViewport();
+		PlayerControllerRef->SetShowMouseCursor(true);
+		PlayerControllerRef->SetInputMode(FInputModeGameAndUI());
+		GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+	}
 }
