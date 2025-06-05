@@ -24,4 +24,13 @@ public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
 	                           FActorComponentTickFunction* ThisTickFunction) override;
+
+	UPROPERTY(EditAnywhere, Category = "RC|UI|InventoryInfo")
+	int32 Columns;
+
+	UPROPERTY(EditAnywhere, Category = "RC|UI|InventoryInfo")
+	int32 Rows;
+
+	UPROPERTY(EditAnywhere, Category = "RC|UI|InventoryInfo")
+	float TileSize;
 };
