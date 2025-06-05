@@ -84,7 +84,7 @@ protected:
 
 public:
 	
-	UPROPERTY(EditAnywhere, Category = "RC|UI")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "RC|UI")
 	UInventoryComponent* InventoryComponent;
 
 	

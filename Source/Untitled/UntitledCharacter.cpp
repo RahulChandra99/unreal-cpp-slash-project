@@ -52,6 +52,7 @@ AUntitledCharacter::AUntitledCharacter()
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
+
 }
 
 void AUntitledCharacter::BeginPlay()
@@ -134,18 +135,19 @@ void AUntitledCharacter::Look(const FInputActionValue& Value)
 
 void AUntitledCharacter::ToggleInventory()
 {
+	if (!InventoryWidget) return;
 	if (InventoryWidget->IsInViewport())
 	{
 		InventoryWidget->RemoveFromParent();
 		PlayerControllerRef->SetShowMouseCursor(false);
 		PlayerControllerRef->SetInputMode(FInputModeGameOnly());
-		GetCharacterMovement()->SetMovementMode(MOVE_None);
+		GetCharacterMovement()->SetMovementMode(MOVE_Walking);
 	}
 	else
 	{
 		InventoryWidget->AddToViewport();
 		PlayerControllerRef->SetShowMouseCursor(true);
 		PlayerControllerRef->SetInputMode(FInputModeGameAndUI());
-		GetCharacterMovement()->SetMovementMode(MOVE_Walking);
+		GetCharacterMovement()->SetMovementMode(MOVE_None);
 	}
 }

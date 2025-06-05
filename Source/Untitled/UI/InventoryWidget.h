@@ -27,8 +27,5 @@ public:
 
 	UPROPERTY(VisibleAnywhere, meta = (BindWidget), Category = "UI")
 	UBackgroundBlur* Blur;
-
-protected:
-
-	virtual void NativeConstruct() override;
+	
 };
