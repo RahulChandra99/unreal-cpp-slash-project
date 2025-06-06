@@ -11,8 +11,7 @@ void UMainPlayerAnimInstance::NativeInitializeAnimation()
 
 	MainPlayerRef = Cast<AUntitledCharacter>(TryGetPawnOwner());
 	
-	bIsCrouching = MainPlayerRef->bIsCrouching;
-	bIsJogging = MainPlayerRef->bIsJogging;
+	
 }
 
 void UMainPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
@@ -21,7 +20,8 @@ void UMainPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 
 	if (!MainPlayerRef) return;
 
-	
+	bIsCrouching = MainPlayerRef->bIsCrouching;
+	bIsJogging = MainPlayerRef->bIsJogging;
 }
 
 
