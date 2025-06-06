@@ -13,6 +13,7 @@
 #include "Blueprint/UserWidget.h"
 #include "Components/InventoryComponent.h"
 #include "Debug/CustomDebug.h"
+#include "MotionWarpingComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -53,6 +54,7 @@ AUntitledCharacter::AUntitledCharacter()
 	FollowCamera->bUsePawnControlRotation = false; // Camera does not rotate relative to arm
 
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
+	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
 
 }
 

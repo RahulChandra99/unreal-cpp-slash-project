@@ -15,6 +15,7 @@ class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
 
+
 DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 
 UCLASS(config=Game)
@@ -70,6 +71,9 @@ protected:
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "RC|Components")
+	class UMotionWarpingComponent* MotionWarpingComponent; 
+
 	void ToggleInventory();
 
 	UPROPERTY()
@@ -105,10 +109,11 @@ protected:
 public:
 	AUntitledCharacter();
 	
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	FORCEINLINE USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	FORCEINLINE UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+	FORCEINLINE UMotionWarpingComponent* GetMotionWarpingComponent() const { return MotionWarpingComponent; }
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "RC|UI")
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "RC|Components")
 	UInventoryComponent* InventoryComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="RC|Config|ReadOnly")
