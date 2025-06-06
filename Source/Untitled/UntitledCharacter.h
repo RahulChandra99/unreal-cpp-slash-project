@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Locomotion/Misc/GameMovementType.h"
 #include "Logging/LogMacros.h"
 #include "UntitledCharacter.generated.h"
 
@@ -19,6 +20,7 @@ DECLARE_LOG_CATEGORY_EXTERN(LogTemplateCharacter, Log, All);
 UCLASS(config=Game)
 class AUntitledCharacter : public ACharacter
 {
+private:
 	GENERATED_BODY()
 
 	/** Camera boom positioning the camera behind the character */
@@ -45,33 +47,30 @@ class AUntitledCharacter : public ACharacter
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "RC|Input", meta = (AllowPrivateAccess = "true"))
 	UInputAction* LookAction;
 
+	/** Jog Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "RC|Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* JogAction;
+
+	/** Crouch Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "RC|Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* CrouchAction;
+
+	/** Switch Game Movement Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "RC|Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* SwitchGameMovementAction;
+	
 	/** Inventory Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "RC|Input", meta = (AllowPrivateAccess = "true"))
 	UInputAction* InventoryToggleAction;
-
-public:
-	AUntitledCharacter();
-	
-
-protected:
-
-	void Move(const FInputActionValue& Value);
-	void Look(const FInputActionValue& Value);
-
-	void ToggleInventory();
 
 protected:
 	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	virtual void BeginPlay();
+	void Move(const FInputActionValue& Value);
+	void Look(const FInputActionValue& Value);
 
-public:
-	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
-	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
-
-	
-
-protected:
+	void ToggleInventory();
 
 	UPROPERTY()
 	APlayerController* PlayerControllerRef;
@@ -82,10 +81,41 @@ protected:
 	UPROPERTY()
 	UUserWidget* InventoryWidget;
 
-public:
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category="RC|Config|Locomotion")
+	EGameMovementType CurrentGameType;
+
+	void SetupPlayerDefaults();
 	
+	void SwitchGameType();
+
+	
+	void ToggleJogging();
+	void ToggleCrouching();
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="RC|Config|Locomotion")
+	float WalkSpeed;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="RC|Config|Locomotion")
+	float JogSpeed;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="RC|Config|Locomotion")
+	float CrouchSpeed;
+	
+	
+public:
+	AUntitledCharacter();
+	
+	FORCEINLINE class USpringArmComponent* GetCameraBoom() const { return CameraBoom; }
+	FORCEINLINE class UCameraComponent* GetFollowCamera() const { return FollowCamera; }
+
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "RC|UI")
 	UInventoryComponent* InventoryComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="RC|Config|ReadOnly")
+	bool bIsCrouching;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="RC|Config|ReadOnly")
+	bool bIsJogging;
 
 	
 };
