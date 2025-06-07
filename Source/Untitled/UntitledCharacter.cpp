@@ -16,6 +16,7 @@
 #include "MotionWarpingComponent.h"
 #include "Components/PlayerActionsComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -185,10 +186,38 @@ void AUntitledCharacter::SwitchGameType()
 
 void AUntitledCharacter::ToggleCrouching()
 {
+	if (bIsCrouching)
+	{
+		FVector Start = GetActorLocation();
+		FVector End = Start + FVector(0,0,115.f);
+
+		float SphereRadius = 30.f;
+
+		FHitResult HitResult;
+
+		bool bHit = UKismetSystemLibrary::SphereTraceSingle(
+		GetWorld(),
+		Start,
+		End,
+		SphereRadius,
+		UEngineTypes::ConvertToTraceType(ECC_Visibility),
+		false,
+		TArray<AActor*>({this}),
+		EDrawDebugTrace::None,
+		HitResult,
+		true
+		);
+
+		if (bHit)
+		{
+			Debug::Print("Cant Crouch, Obstacle Detected");
+			return;
+		}
+	}
+	
 	bIsCrouching = !bIsCrouching;
-
+	
 	CrouchingVisual(bIsCrouching);
-
 	UpdateMovementSpeed();
 
 }
