@@ -3,11 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/PlayerActionsComponent.h"
 #include "GameFramework/Character.h"
 #include "Locomotion/Misc/GameMovementType.h"
 #include "Logging/LogMacros.h"
 #include "UntitledCharacter.generated.h"
 
+class UPlayerActionsComponent;
 class UInventoryComponent;
 class USpringArmComponent;
 class UCameraComponent;
@@ -64,6 +66,14 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "RC|Input", meta = (AllowPrivateAccess = "true"))
 	UInputAction* InventoryToggleAction;
 
+	/** VaultMantle Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "RC|Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* MantleInputAction;
+	
+	/** VaultMantle Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "RC|Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* AimingInputAction;
+
 protected:
 	
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
@@ -91,10 +101,24 @@ protected:
 	void SetupPlayerDefaults();
 	
 	void SwitchGameType();
-
 	
+	UFUNCTION(BlueprintImplementableEvent)
+	void JoggingVisual(bool IsJogging);
+	void UpdateMovementSpeed();
 	void ToggleJogging();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void CrouchingVisual(bool IsCrouching);
 	void ToggleCrouching();
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void AimingVisual(bool IsAiming);
+	void ToggleAiming();
+	
+	void TryVaultMantle();
+	EVaultType DetectVaultType(FHitResult& OutHitResult);
+	void StartVault(const FHitResult& HitResult);
+	void StartMantle(const FHitResult& HitResult);
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="RC|Config|Locomotion")
 	float WalkSpeed;
@@ -103,7 +127,16 @@ protected:
 	float JogSpeed;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="RC|Config|Locomotion")
-	float CrouchSpeed;
+	float CrouchWalkSpeed;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="RC|Config|Locomotion")
+	float CrouchRunSpeed;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category="RC|Config|Locomotion")
+	float StandingCapsuleHalfHeight = 88.0f;
+
+	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category="RC|Config|Locomotion")
+	float CrouchedCapsuleHalfHeight = 44.0f;
 	
 	
 public:
@@ -121,6 +154,25 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="RC|Config|ReadOnly")
 	bool bIsJogging;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="RC|Config|ReadOnly")
+	bool bIsAiming;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Vaulting")
+	float VaultTraceDistance = 150.f;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Vaulting")
+	float VaultTraceRadius = 30.f;
+
+	float ForwardDistance = 100.f;
+	float ForwardHeightOffset = 50.f;
+
+	float DownTraceHeight = 150.f;
+	float OverlapCheckHeight = 200.f;
+
+	float MaxVaultHeight = 100.f;
+	float MaxMantleHeight = 180.f;
+
 
 	
 };

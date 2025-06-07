@@ -30,4 +30,11 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
 	bool bIsCrouching;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
+	float Speed;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Animation)
+	bool bIsAccelerating;
+	
 };

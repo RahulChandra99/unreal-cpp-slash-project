@@ -14,6 +14,7 @@
 #include "Components/InventoryComponent.h"
 #include "Debug/CustomDebug.h"
 #include "MotionWarpingComponent.h"
+#include "Components/PlayerActionsComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
@@ -55,6 +56,8 @@ AUntitledCharacter::AUntitledCharacter()
 
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
+
+	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
 
 }
 
@@ -102,6 +105,12 @@ void AUntitledCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 		// Crouch Toggle
 		EnhancedInputComponent->BindAction(CrouchAction, ETriggerEvent::Started, this, &AUntitledCharacter::ToggleCrouching);
+
+		// Vault Mantle Toggle
+		EnhancedInputComponent->BindAction(MantleInputAction, ETriggerEvent::Started, this, &AUntitledCharacter::TryVaultMantle);
+
+		// Aiming Toggle
+		EnhancedInputComponent->BindAction(AimingInputAction, ETriggerEvent::Triggered, this, &AUntitledCharacter::ToggleAiming);
 	}
 }
 
@@ -174,23 +183,44 @@ void AUntitledCharacter::SwitchGameType()
 	}
 }
 
+void AUntitledCharacter::ToggleCrouching()
+{
+	bIsCrouching = !bIsCrouching;
+
+	CrouchingVisual(bIsCrouching);
+
+	UpdateMovementSpeed();
+
+}
+
 void AUntitledCharacter::ToggleJogging()
 {
-	if (bIsJogging)
+	bIsJogging = !bIsJogging;
+
+	UpdateMovementSpeed();
+	JoggingVisual(bIsJogging);
+}
+
+void AUntitledCharacter::UpdateMovementSpeed()
+{
+	if (bIsCrouching)
 	{
-		bIsJogging = false;
-		GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
+		if (bIsJogging)
+			GetCharacterMovement()->MaxWalkSpeed = CrouchRunSpeed; // crouch + jog
+		else
+			GetCharacterMovement()->MaxWalkSpeed = CrouchWalkSpeed; // normal crouch
 	}
 	else
 	{
-		bIsJogging = true;
-		GetCharacterMovement()->MaxWalkSpeed = JogSpeed;
+		if (bIsJogging)
+			GetCharacterMovement()->MaxWalkSpeed = JogSpeed;
+		else
+			GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 	}
 }
 
-void AUntitledCharacter::ToggleCrouching()
-{
-}
+
+
 
 void AUntitledCharacter::ToggleInventory()
 {
@@ -209,4 +239,100 @@ void AUntitledCharacter::ToggleInventory()
 		PlayerControllerRef->SetInputMode(FInputModeGameAndUI());
 		GetCharacterMovement()->SetMovementMode(MOVE_None);
 	}
+}
+
+void AUntitledCharacter::ToggleAiming()
+{
+	bIsAiming = !bIsAiming;
+	
+	AimingVisual(bIsAiming);
+}
+
+void AUntitledCharacter::TryVaultMantle()
+{
+	FHitResult HitResult;
+	EVaultType VaultType = DetectVaultType(HitResult);
+
+	if (VaultType == EVaultType::Vault)
+	{
+		StartVault(HitResult);
+	}
+	else if (VaultType == EVaultType::Mantle)
+	{
+		StartMantle(HitResult);
+	}
+}
+
+EVaultType AUntitledCharacter::DetectVaultType(FHitResult& OutHitResult)
+{
+	FVector ForwardStart = GetActorLocation() + FVector(0, 0, ForwardHeightOffset);
+    FVector ForwardEnd = ForwardStart + GetActorForwardVector() * ForwardDistance;
+    
+    FHitResult ForwardHit;
+    FCollisionQueryParams Params;
+    Params.AddIgnoredActor(this);
+    
+    bool bForwardHit = GetWorld()->LineTraceSingleByChannel(ForwardHit, ForwardStart, ForwardEnd, ECC_Visibility, Params);
+    DrawDebugLine(GetWorld(), ForwardStart, ForwardEnd, FColor::Green, false, 2.f);
+
+	if (bForwardHit)
+	{
+		FVector DownTraceStart = ForwardHit.ImpactPoint + FVector(0, 0, DownTraceHeight);
+		FVector DownTraceEnd = ForwardHit.ImpactPoint + FVector(0, 0, -50.f);
+
+		FHitResult DownHit;
+		bool bDownHit = GetWorld()->LineTraceSingleByChannel(DownHit, DownTraceStart, DownTraceEnd, ECC_Visibility, Params);
+		DrawDebugLine(GetWorld(), DownTraceStart, DownTraceEnd, FColor::Blue, false, 2.f);
+
+		if (bDownHit)
+		{
+			float ObstacleHeight = DownHit.ImpactPoint.Z - GetActorLocation().Z;
+
+			if (ObstacleHeight > MaxMantleHeight)
+			{
+				// Too high to climb
+				return EVaultType::None;
+			}
+
+			FVector OverlapLocation = DownHit.ImpactPoint + FVector(0, 0, 50.f);
+			FCollisionShape CapsuleShape = FCollisionShape::MakeCapsule(30.f, 90.f);
+
+			bool bOverlapBlocked = GetWorld()->OverlapBlockingTestByChannel(OverlapLocation, FQuat::Identity, ECC_Visibility, CapsuleShape, Params);
+			DrawDebugCapsule(GetWorld(), OverlapLocation, 90.f, 30.f, FQuat::Identity, FColor::Red, false, 2.f);
+
+			if (bOverlapBlocked)
+			{
+				return EVaultType::None;
+			}
+
+			if (ObstacleHeight < MaxVaultHeight)
+			{
+				Debug::Print("Vault");
+				return EVaultType::Vault;
+			}
+			else
+			{
+				Debug::Print("Mantle");
+				return EVaultType::Mantle;
+			}
+		}
+	}
+
+	return EVaultType::None;
+
+
+}
+
+void AUntitledCharacter::StartVault(const FHitResult& HitResult)
+{
+	FVector WarpTarget = HitResult.ImpactPoint + FVector(0, 0, 50); // small upward offset
+	//MotionWarpingComponent->AddOrUpdateWarpTarget(FName("VaultTarget"), WarpTarget);
+	//PlayAnimMontage(VaultMontage);
+}
+
+void AUntitledCharacter::StartMantle(const FHitResult& HitResult)
+{
+	FVector WarpTarget = HitResult.ImpactPoint + FVector(0, 0, 100); // higher offset
+	//MotionWarpingComponent->AddOrUpdateWarpTarget(FName("MantleTarget"), WarpTarget);
+	//PlayAnimMontage(MantleMontage);
 }
