@@ -9,6 +9,7 @@
 #include "Logging/LogMacros.h"
 #include "UntitledCharacter.generated.h"
 
+class UPlayerInteractionComponent;
 class UPlayerActionsComponent;
 class UInventoryComponent;
 class USpringArmComponent;
@@ -70,9 +71,13 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "RC|Input", meta = (AllowPrivateAccess = "true"))
 	UInputAction* MantleInputAction;
 	
-	/** VaultMantle Input Action */
+	/** Aiming Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "RC|Input", meta = (AllowPrivateAccess = "true"))
 	UInputAction* AimingInputAction;
+
+	/** Interact Input Action */
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "RC|Input", meta = (AllowPrivateAccess = "true"))
+	UInputAction* InteractInputAction;
 
 protected:
 	
@@ -148,6 +153,9 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "RC|Components")
 	UInventoryComponent* InventoryComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "RC|Components")
+	UPlayerInteractionComponent* InteractionComponent;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category="RC|Config|ReadOnly")
 	bool bIsCrouching;

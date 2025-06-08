@@ -14,7 +14,11 @@
 #include "Components/InventoryComponent.h"
 #include "Debug/CustomDebug.h"
 #include "MotionWarpingComponent.h"
+#include "Untitled.h"
 #include "Components/PlayerActionsComponent.h"
+#include "Components/PlayerInteractionComponent.h"
+#include "Engine/OverlapResult.h"
+#include "Interactions/Interfaces/InteractInterface.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 
@@ -57,6 +61,8 @@ AUntitledCharacter::AUntitledCharacter()
 
 	InventoryComponent = CreateDefaultSubobject<UInventoryComponent>(TEXT("InventoryComponent"));
 	MotionWarpingComponent = CreateDefaultSubobject<UMotionWarpingComponent>(TEXT("MotionWarpingComponent"));
+	InteractionComponent = CreateDefaultSubobject<UPlayerInteractionComponent>(TEXT("InteractionComponent"));
+
 
 	GetCharacterMovement()->NavAgentProps.bCanCrouch = true;
 
@@ -112,6 +118,9 @@ void AUntitledCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 
 		// Aiming Toggle
 		EnhancedInputComponent->BindAction(AimingInputAction, ETriggerEvent::Triggered, this, &AUntitledCharacter::ToggleAiming);
+
+		// Aiming Toggle
+		EnhancedInputComponent->BindAction(InteractInputAction, ETriggerEvent::Started, InteractionComponent, &UPlayerInteractionComponent::Interact);
 	}
 }
 
@@ -276,6 +285,7 @@ void AUntitledCharacter::ToggleAiming()
 	
 	AimingVisual(bIsAiming);
 }
+
 
 void AUntitledCharacter::TryVaultMantle()
 {
