@@ -3,12 +3,16 @@
 
 #include "NormalDoor.h"
 
+#include "Untitled/Debug/CustomDebug.h"
+
 
 // Sets default values
 ANormalDoor::ANormalDoor()
 {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	bIsDoorOpening = false;
 }
 
 // Called when the game starts or when spawned
@@ -26,7 +30,9 @@ void ANormalDoor::Tick(float DeltaTime)
 
 void ANormalDoor::Interact(class AUntitledCharacter* MainPlayer)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Normal Door Opened"));
 
+	// Notify Blueprint
+	OnDoorInteract(bIsDoorOpening);
 }
+
 
