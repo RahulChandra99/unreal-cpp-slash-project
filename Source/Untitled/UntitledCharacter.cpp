@@ -72,8 +72,6 @@ void AUntitledCharacter::BeginPlay()
 	Super::BeginPlay();
 
 	SetupPlayerDefaults();
-
-	
 	
 }
 
@@ -118,7 +116,7 @@ void AUntitledCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 		// Aiming Toggle
 		EnhancedInputComponent->BindAction(AimingInputAction, ETriggerEvent::Triggered, this, &AUntitledCharacter::ToggleAiming);
 
-		// Aiming Toggle
+		// Interact Toggle
 		EnhancedInputComponent->BindAction(InteractInputAction, ETriggerEvent::Started, InteractionComponent, &UPlayerInteractionComponent::Interact);
 	}
 }
