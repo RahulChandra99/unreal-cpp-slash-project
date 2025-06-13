@@ -125,18 +125,6 @@ protected:
 	void StartVault(const FHitResult& HitResult);
 	void StartMantle(const FHitResult& HitResult);
 
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="RC|Config|Locomotion")
-	float WalkSpeed;
-
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="RC|Config|Locomotion")
-	float JogSpeed;
-
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="RC|Config|Locomotion")
-	float CrouchWalkSpeed;
-
-	UPROPERTY(EditAnywhere,BlueprintReadWrite, Category="RC|Config|Locomotion")
-	float CrouchRunSpeed;
-
 	UPROPERTY(EditDefaultsOnly,BlueprintReadWrite, Category="RC|Config|Locomotion")
 	float StandingCapsuleHalfHeight = 88.0f;
 

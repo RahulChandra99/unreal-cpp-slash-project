@@ -28,7 +28,6 @@ DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
 
 AUntitledCharacter::AUntitledCharacter()
-	:WalkSpeed(300.f), JogSpeed(400.f)
 {
 	GetCapsuleComponent()->InitCapsuleSize(42.f, 96.0f);
 		
@@ -155,9 +154,6 @@ void AUntitledCharacter::Look(const FInputActionValue& Value)
 
 void AUntitledCharacter::SetupPlayerDefaults()
 {
-	//DEBUG
-	bIsJogging = false;
-	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 	
 	PlayerControllerRef = UGameplayStatics::GetPlayerController(GetWorld(), 0);
 	if (!IsValid(PlayerControllerRef)) return;
@@ -241,20 +237,7 @@ void AUntitledCharacter::ToggleJogging()
 
 void AUntitledCharacter::UpdateMovementSpeed()
 {
-	if (bIsCrouching)
-	{
-		if (bIsJogging)
-			GetCharacterMovement()->MaxWalkSpeed = CrouchRunSpeed; // crouch + jog
-		else
-			GetCharacterMovement()->MaxWalkSpeed = CrouchWalkSpeed; // normal crouch
-	}
-	else
-	{
-		if (bIsJogging)
-			GetCharacterMovement()->MaxWalkSpeed = JogSpeed;
-		else
-			GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
-	}
+	
 }
 
 
