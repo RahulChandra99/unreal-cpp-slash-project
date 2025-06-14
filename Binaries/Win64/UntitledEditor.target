@@ -374,6 +374,14 @@
 			"Type": "DynamicLibrary"
 		},
 		{
+			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-ChaosVehiclesCore.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-ChaosVehiclesEngine.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
 			"Path": "$(EngineDir)/Binaries/Win64/UnrealEditor-CinematicCamera.dll",
 			"Type": "DynamicLibrary"
 		},
@@ -2515,6 +2523,18 @@
 		},
 		{
 			"Path": "$(EngineDir)/Plugins/Experimental/ChaosUserDataPT/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ChaosVehiclesPlugin/Binaries/Win64/UnrealEditor-ChaosVehicles.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ChaosVehiclesPlugin/Binaries/Win64/UnrealEditor-ChaosVehiclesEditor.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ChaosVehiclesPlugin/Binaries/Win64/UnrealEditor.modules",
 			"Type": "RequiredResource"
 		},
 		{
@@ -26412,6 +26432,10 @@
 			"Type": "UFS"
 		},
 		{
+			"Path": "$(EngineDir)/Plugins/Experimental/ChaosVehiclesPlugin/ChaosVehiclesPlugin.uplugin",
+			"Type": "UFS"
+		},
+		{
 			"Path": "$(EngineDir)/Plugins/Experimental/CharacterAI/CharacterAI.uplugin",
 			"Type": "UFS"
 		},
@@ -26820,6 +26844,7 @@
 		"ChaosSolverPlugin",
 		"ChaosUserDataPT",
 		"ChaosVD",
+		"ChaosVehiclesPlugin",
 		"CharacterAI",
 		"ChunkDownloader",
 		"CmdLinkServer",
