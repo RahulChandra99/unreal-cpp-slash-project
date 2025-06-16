@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\intermediate\\build\\win64\\unrealeditor\\inc\\darkernodes\\uht\\dnupdateconfig.gen.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\intermediate\\build\\win64\\x64\\untitlededitor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\darkernodes\\definitions.darkernodes.h",
+            "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\source\\darkernodes\\private\\popup\\dnupdateconfig.h",
+            "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\intermediate\\build\\win64\\unrealeditor\\inc\\darkernodes\\uht\\dnupdateconfig.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

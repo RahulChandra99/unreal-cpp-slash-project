@@ -14,13 +14,9 @@
 #include "Components/InventoryComponent.h"
 #include "Debug/CustomDebug.h"
 #include "MotionWarpingComponent.h"
-#include "Untitled.h"
 #include "Components/PlayerActionsComponent.h"
 #include "Components/PlayerInteractionComponent.h"
-#include "Engine/OverlapResult.h"
-#include "Interactions/Interfaces/InteractInterface.h"
 #include "Kismet/GameplayStatics.h"
-#include "Kismet/KismetMathLibrary.h"
 
 DEFINE_LOG_CATEGORY(LogTemplateCharacter);
 
@@ -345,14 +341,14 @@ EVaultType AUntitledCharacter::DetectVaultType(FHitResult& OutHitResult)
 
 void AUntitledCharacter::StartVault(const FHitResult& HitResult)
 {
-	FVector WarpTarget = HitResult.ImpactPoint + FVector(0, 0, 50); // small upward offset
+	//FVector WarpTarget = HitResult.ImpactPoint + FVector(0, 0, 50); // small upward offset
 	//MotionWarpingComponent->AddOrUpdateWarpTarget(FName("VaultTarget"), WarpTarget);
 	//PlayAnimMontage(VaultMontage);
 }
 
 void AUntitledCharacter::StartMantle(const FHitResult& HitResult)
 {
-	FVector WarpTarget = HitResult.ImpactPoint + FVector(0, 0, 100); // higher offset
+	//FVector WarpTarget = HitResult.ImpactPoint + FVector(0, 0, 100); // higher offset
 	//MotionWarpingComponent->AddOrUpdateWarpTarget(FName("MantleTarget"), WarpTarget);
 	//PlayAnimMontage(MantleMontage);
 }

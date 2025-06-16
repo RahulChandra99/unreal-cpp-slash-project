@@ -3748,6 +3748,30 @@
 		{
 			"Path": "$(ProjectDir)/Binaries/Win64/UnrealEditor.modules",
 			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/DarkerNodes/Binaries/Win64/UnrealEditor-DarkerNodes.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/DarkerNodes/Binaries/Win64/UnrealEditor-DarkerNodes.pdb",
+			"Type": "SymbolFile"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/DarkerNodes/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/Electron913898e3acc7V14/Binaries/Win64/UnrealEditor-ElectronicNodes.dll",
+			"Type": "DynamicLibrary"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/Electron913898e3acc7V14/Binaries/Win64/UnrealEditor-ElectronicNodes.pdb",
+			"Type": "SymbolFile"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/Electron913898e3acc7V14/Binaries/Win64/UnrealEditor.modules",
+			"Type": "RequiredResource"
 		}
 	],
 	"RuntimeDependencies": [
@@ -26800,6 +26824,14 @@
 			"Type": "UFS"
 		},
 		{
+			"Path": "$(ProjectDir)/Plugins/DarkerNodes/DarkerNodes.uplugin",
+			"Type": "UFS"
+		},
+		{
+			"Path": "$(ProjectDir)/Plugins/Electron913898e3acc7V14/ElectronicNodes.uplugin",
+			"Type": "UFS"
+		},
+		{
 			"Path": "$(ProjectDir)/Untitled.uproject",
 			"Type": "UFS"
 		}
@@ -26858,6 +26890,7 @@
 		"CryptoKeys",
 		"CurveEditorTools",
 		"CustomMeshComponent",
+		"DarkerNodes",
 		"DataValidation",
 		"Dataflow",
 		"DatasmithContent",
@@ -26865,6 +26898,7 @@
 		"EOSShared",
 		"EditorDebugTools",
 		"EditorScriptingUtilities",
+		"ElectronicNodes",
 		"EngineAssetDefinitions",
 		"EnhancedInput",
 		"EnvironmentQueryEditor",

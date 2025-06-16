@@ -1,0 +1,36 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\source\\darkernodes\\private\\colorizer.cpp",
+        "ProvidedModule": "",
+        "PCH": "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\intermediate\\build\\win64\\x64\\untitlededitor\\development\\unrealed\\sharedpch.unrealed.project.valapi.cpp20.h.pch",
+        "Includes": [
+            "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\intermediate\\build\\win64\\x64\\unrealeditor\\development\\darkernodes\\definitions.darkernodes.h",
+            "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\source\\darkernodes\\private\\colorizer.h",
+            "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\source\\darkernodes\\public\\darkernodessettings.h",
+            "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\intermediate\\build\\win64\\unrealeditor\\inc\\darkernodes\\uht\\darkernodessettings.generated.h",
+            "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\source\\darkernodes\\private\\lib\\brushdatabase.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\slate\\public\\slatematerialbrush.h",
+            "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\intermediate\\build\\win64\\unrealeditor\\inc\\darkernodes\\uht\\brushdatabase.generated.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\projects\\public\\interfaces\\ipluginmanager.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\projects\\public\\plugindescriptor.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\projects\\public\\custombuildsteps.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\projects\\public\\localizationdescriptor.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\projects\\public\\moduledescriptor.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\projects\\public\\plugindisalloweddescriptor.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\projects\\public\\pluginreferencedescriptor.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\projects\\public\\versescope.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\developer\\settingseditor\\public\\isettingseditormodule.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\plugins\\fx\\niagara\\source\\niagaraeditor\\public\\niagaraeditorstyle.h",
+            "d:\\gamedevelopment\\unrealengine\\projects\\githubprojects\\unreal-cpp-slash-project\\plugins\\darkernodes\\source\\darkernodes\\private\\popup\\dnupdatepopup.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\slate\\public\\framework\\text\\slatehyperlinkrun.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\slate\\public\\framework\\text\\ilayoutblock.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\slate\\public\\framework\\text\\irunrenderer.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\runtime\\slate\\public\\framework\\text\\islaterun.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\source\\editor\\unrealed\\classes\\settings\\editorstylesettings.h",
+            "d:\\apps\\ue\\ue_5.4\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\unrealed\\uht\\editorstylesettings.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
